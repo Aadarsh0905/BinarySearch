@@ -1,0 +1,44 @@
+package BinarySearch;
+
+import java.util.*;
+
+public class UpperBound {
+    public static void main(String[] args) {
+        Scanner in= new Scanner (System.in);
+        System.out.println("Enter the number of elements in the array: ");
+        int n=in.nextInt();
+        int[] arr=new int[n];
+        System.out.println("Enter the elements in the array: ");
+        for(int i=0;i<n;i++){
+            arr[i]=in.nextInt();
+        }
+        Arrays.sort(arr);
+        System.out.println("Enter the value of x: ");
+        int x=in.nextInt();
+
+        //Brute force
+//        int ans=n;
+//        for(int i=0;i<n;i++){
+//            if(arr[i]>x){
+//                ans=i;
+//                break;
+//            }
+//        }
+//        System.out.println("The upper bound is: "+ans);
+
+        //Optimal Approach
+        System.out.println("THe upper bound is: "+BS(arr,0,n-1,x));
+    }
+    public static int BS(int[]arr,int low,int high,int x){
+        int ans=arr.length;
+        while(low<=high){
+            int mid=low+(high-low)/2;
+            if(arr[mid]>=x){
+                ans=mid;
+                high=mid-1;
+            }
+            else low=mid+1;
+        }
+        return ans;
+    }
+}
