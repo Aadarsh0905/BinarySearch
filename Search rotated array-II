@@ -1,0 +1,48 @@
+package BinarySearch;
+
+import java.util.Scanner;
+
+public class SearchRotatedArray2 {
+    public static void main(String[] args) {
+
+        //Duplicates also applicable and have to search for existence of the target element
+        Scanner in= new Scanner (System.in);
+        System.out.println("Enter the number of elements in the array: ");
+        int n=in.nextInt();
+        int[] arr=new int[n];
+        System.out.println("Enter the elements in the array: ");
+        for(int i=0;i<n;i++){
+            arr[i]=in.nextInt();
+        }
+        System.out.println("Enter the value of target: ");
+        int target=in.nextInt();
+
+        System.out.println(rotatedArray(arr,0,n-1,target));
+
+    }
+
+    public static int rotatedArray(int[] arr,int low,int high,int target){
+        while(low<=high){
+            int mid=low+(high-low)/2;
+            if(arr[mid]==target)return mid;
+            if(arr[low]==arr[mid] && arr[mid]==arr[high]){
+                low++;
+                high--;
+                continue;
+            }
+            else if(arr[low]<=arr[mid]){
+                if(arr[low]<=target && target<=arr[mid]){
+                    high=mid-1;
+                }
+                else low=mid+1;
+            }
+            else{
+                if(arr[mid]<=target && target<=arr[high]){
+                    low=mid+1;
+                }
+                else high=mid-1;
+            }
+        }
+        return -1;
+    }
+}
