@@ -1,0 +1,58 @@
+package BinarySearch;
+
+import java.util.*;
+
+public class MinRotatedSortedArray {
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+
+        System.out.println("Enter the number of elements in the array: ");
+        int n = in.nextInt();
+
+        int[] arr = new int[n];
+        System.out.println("Enter the elements in the array: ");
+        for(int i = 0; i < n; i++){
+            arr[i] = in.nextInt();
+        }
+
+        System.out.println("The minimum value among the given values is: "
+                + min(arr, 0, n - 1));
+    }
+
+
+
+    public static int min(int[] arr,int low,int high){
+        int ans = Integer.MAX_VALUE;
+
+        while(low <= high){
+
+            // ✅ If already sorted
+            if(arr[low] <= arr[high]){
+                ans = Math.min(ans, arr[low]);
+                break;
+            }
+
+            int mid = low + (high - low) / 2;
+
+            // ✅ Left sorted
+            if(arr[low] < arr[mid]){
+                ans = Math.min(ans, arr[low]);
+                low = mid + 1;
+            }
+
+            // ✅ Right sorted
+            else if(arr[mid] < arr[high]){
+                ans = Math.min(ans, arr[mid]);
+                high = mid - 1;
+            }
+
+            // ✅ Duplicates case (fix: shrink carefully)
+            else{
+                ans = Math.min(ans, arr[low]);  // ⭐ important fix
+                low++;
+                high--;
+            }
+        }
+        return ans;
+    }
+}
